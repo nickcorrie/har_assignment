@@ -66,10 +66,19 @@ for (i in 1:6){
   har_mean_and_std_dataset$Activity[har_mean_and_std_dataset$Activity == i] <- as.character(activity_labels[i,2])
 }
 
+
+####
+# aggregrate the data by subject and activity
+####
+
+final_output <- har_mean_and_std_dataset %>% group_by(Subject,Activity) %>% summarize_each(funs(mean(., na.rm=TRUE))) 
+
 ####
 # write out the tidy data set
 ####
 
 
 write.table(har_mean_and_std_dataset, "har_mean_and_std_dataset.txt", row.names = FALSE)
+
+write.table(final_output, "final_output.txt", row.names = FALSE)
 
